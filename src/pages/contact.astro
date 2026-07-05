@@ -1,0 +1,13 @@
+---
+export const prerender = false;
+import Layout from "../layouts/Layout.astro";
+import ContactLayout from "../layouts/contact.astro";
+
+const title = "Isabelle Troussicot - RDV Magnétisme & Hypnose à Scey-Sur-Saône";
+const description =
+  "Prenez rendez-vous avec Isabelle Troussicot pour un soin de magnétisme, d'hypnose spirituelle ou une séance de libération émotionnelle à Scey-Sur-Saône.";
+---
+
+<Layout {title} {description}>
+  <ContactLayout />
+</Layout>

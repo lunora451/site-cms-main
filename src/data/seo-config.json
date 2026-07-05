@@ -1,0 +1,41 @@
+{
+  "global": {
+    "og": {
+      "siteName": "coucou tu va ",
+      "defaultImage": "https://lunorastart.eu/ogall.png",
+      "defaultImageAlt": "alt image",
+      "locale": "fr_FR",
+      "type": "website"
+    },
+    "jsonLd": []
+  },
+  "pages": {
+    "/": {
+      "metaTitle": "title de l'indexzdoljkz uiui",
+      "metaDescription": "description de la page principal / landingpage",
+      "og": {
+        "type": "website"
+      },
+      "jsonLd": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "",
+          "description": "",
+          "author": {
+            "@type": "Person",
+            "name": ""
+          },
+          "datePublished": "",
+          "image": ""
+        }
+      ]
+    },
+    "/a-propos": {
+      "metaTitle": "hello proposzdz",
+      "og": {
+        "type": "website"
+      }
+    }
+  }
+}

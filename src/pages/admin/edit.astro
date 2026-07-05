@@ -1,0 +1,62 @@
+---
+export const prerender = false;
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import { getCollection, getCollectionFields } from "../../libs/admin/collections";
+import { getFile } from "../../libs/admin/github";
+import { parseFrontmatter } from "../../libs/admin/markdown";
+import { env } from "cloudflare:workers";
+import ArticleEditor from "../../admin/components/ArticleEditor.svelte";
+
+const runtimeEnv = env;
+const collectionName = Astro.url.searchParams.get("collection") || "";
+const fileName = Astro.url.searchParams.get("file") || "";
+
+if (!collectionName) {
+    return Astro.redirect("/");
+}
+
+const config = getCollection(collectionName);
+if (!config) {
+    return Astro.redirect("/");
+}
+
+const fields = getCollectionFields(collectionName);
+
+// Load existing article if editing
+let existingData: Record<string, any> = {};
+let existingContent = "";
+let fileSha = "";
+
+if (fileName) {
+    const fileData = await getFile(collectionName, fileName, runtimeEnv);
+    if (fileData) {
+        const parsed = parseFrontmatter(fileData.content);
+        existingData = parsed.frontmatter;
+        existingContent = parsed.content;
+        fileSha = fileData.sha;
+    }
+}
+
+const isEditing = !!fileName;
+const pageTitle = isEditing
+    ? `Éditer — ${existingData.title || fileName}`
+    : `Nouveau — ${config.title}`;
+
+const githubOwner = runtimeEnv.GITHUB_OWNER || import.meta.env.GITHUB_OWNER;
+const githubRepo = runtimeEnv.GITHUB_REPO || import.meta.env.GITHUB_REPO;
+---
+
+<AdminLayout title={pageTitle} activePage="editor" editorMode={true}>
+    <ArticleEditor
+        client:only="svelte"
+        {config}
+        {fields}
+        initialData={existingData}
+        initialContent={existingContent}
+        initialSha={fileSha}
+        initialFileName={fileName}
+        collectionName={collectionName}
+        {githubOwner}
+        {githubRepo}
+    />
+</AdminLayout>

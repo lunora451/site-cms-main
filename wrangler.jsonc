@@ -1,0 +1,14 @@
+{
+	"name": "site-cms",
+	"compatibility_date": "2026-04-16",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"keep_vars": true,
+	"r2_buckets": [
+		{
+			"binding": "site-simple-contact-cms",
+			"bucket_name": "lu-media"
+		}
+	]
+}

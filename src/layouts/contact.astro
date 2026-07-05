@@ -1,0 +1,619 @@
+---
+import Pic from "../assets/img/symbole-esoterique.avif";
+import formulaire from "../assets/img/contact-writing.png";
+import { Image } from "astro:assets";
+import { env } from "cloudflare:workers";
+
+const turnstileSiteKey =
+  env?.PUBLIC_TURNSTILE_SITE_KEY || import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+<main>
+  <section id="section-contact">
+    <div class="lu-container">
+      <div class="cs-form-group">
+        <h1 class="cs-h3">
+          <Image
+            class="cs-picture"
+            src={formulaire}
+            alt="icone formulaire et crayon"
+            format="avif"
+            priority
+          />
+          Une question ? Magnetisme, hypnose, atelier ou autre je suis la pour vous
+          aider
+        </h1>
+        <!--Form-->
+        <form
+          class="cs-form"
+          id="contact-form"
+          name="Contact Form"
+          method="post"
+        >
+          <label class="cs-label">
+            Nom
+            <input
+              class="cs-input"
+              required
+              type="text"
+              name="name"
+              placeholder="Nom"
+            />
+          </label>
+          <label class="cs-label cs-email">
+            Email
+            <input
+              class="cs-input"
+              required
+              type="email"
+              name="email"
+              placeholder="Email"
+            />
+          </label>
+          <label class="cs-label cs-phone">
+            Telephone (optionnel)
+            <input
+              class="cs-input"
+              type="tel"
+              name="phone"
+              placeholder="Tel"
+              pattern="^(\\+33|0)[1-9]([ .\\-]?[0-9]{2}){4}$"
+              title="Format : 06 12 34 56 78 ou +33 6 12 34 56 78"
+            />
+            <!-- pattern="^[\+]?[0-9\s.\-()]{8,20}$"
+    title="Numéro de téléphone (8 à 20 chiffres, espaces et caractères spéciaux autorisés)" -->
+          </label>
+
+          <label class="cs-label">
+            Message ibazdfiad
+            <textarea
+              class="cs-input lu-paraarea"
+              required
+              maxlength="5000"
+              name="message"
+              placeholder="Ecrivez votre message..."></textarea>
+          </label>
+
+          <!-- Cloudflare Turnstile Widget -->
+          <div
+            class="cf-turnstile"
+            data-sitekey={turnstileSiteKey}
+            data-theme="light"
+          >
+          </div>
+
+          <button
+            class="cs-button-solid-primary-to-white-round cs-submit"
+            id="submit-message"
+            type="submit">Envoie demande</button
+          >
+        </form>
+
+        <iframe
+          class="mapIframe"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2686.7654113401513!2d5.962385876725056!3d47.66955348362776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4792eb7ccd895fc5%3A0x99be55fd8793195b!2sIsabelle%20Troussicot%20-%20Magn%C3%A9tiseuse%20Energ%C3%A9ticienne!5e0!3m2!1sfr!2sfr!4v1766511354209!5m2!1sfr!2sfr"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="cs-wrapper">
+        <div class="cs-content">
+          <span class="lu-topper">Contactez-moi</span>
+          <h2 class="lu-title">Entrons en Contact</h2>
+          <p class="lu-para">
+            Que ce soit pour une question, un renseignement ou pour réserver
+            votre séance de magnétisme ou d'hypnose, je suis là pour vous
+            accompagner. Complétez le formulaire et je reviendrai vers vous
+            rapidement afin que nous puissions échanger sur vos besoins en toute
+            bienveillance.
+          </p>
+        </div>
+        <Image
+          class="cs-background"
+          src={Pic}
+          alt="photo bureau avec bougies allumé un attrape-rêves et un vieux livre de reliure cuir"
+          format="avif"
+          width={750}
+          height={1050}
+          priority
+        />
+      </div>
+    </div>
+  </section>
+</main>
+
+<style lang="scss">
+  main {
+    max-width: 1400px;
+    margin: auto;
+    box-shadow: #0000002b 0 0 14px 1px;
+    padding-top: 8.75rem;
+  }
+
+  .mapIframe {
+    width: 80%;
+    height: 250px;
+    margin-top: 2rem;
+  }
+
+  .cs-success {
+    text-align: center;
+    padding: 2rem 1rem;
+    p {
+      font-size: 1.125rem;
+      margin-bottom: 0.5rem;
+      color: var(--headerColor);
+      &:first-child {
+        font-size: 1.375rem;
+        font-weight: 700;
+      }
+    }
+  }
+
+  @media only screen and (min-width: 0rem) {
+    #section-contact {
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+
+      .lu-container {
+        width: 100%;
+        max-width: calc(1280 / 16 * 1rem);
+        margin: auto;
+        display: flex;
+        padding: 0;
+        justify-content: center;
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .cs-content {
+        text-align: center;
+        width: 100%;
+        padding: var(--sectionPadding);
+        padding-inline: 1rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(6.9px);
+        -webkit-backdrop-filter: blur(6.9px);
+        border: 1px solid rgba(93, 134, 108, 0.6);
+      }
+
+      .cs-form-group {
+        text-align: center;
+        width: 100%;
+        max-width: calc(704 / 16 * 1rem);
+        margin: auto;
+        padding: var(--sectionPadding);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        order: 2;
+      }
+
+      .lu-title {
+      }
+
+      .lu-para {
+        margin: 0;
+        opacity: 1;
+      }
+
+      .cs-h3 {
+        font-size: calc(20 / 16 * 1rem);
+        line-height: 1.2em;
+        font-weight: 700;
+        text-align: left;
+        max-width: calc(522 / 16 * 1rem);
+        margin: 0 auto calc(32 / 16 * 1rem) 0;
+        color: var(--headerColor);
+        display: flex;
+        padding-inline: 1rem;
+        justify-content: flex-start;
+        align-items: center;
+        gap: calc(16 / 16 * 1rem);
+      }
+
+      .cs-picture {
+        width: calc(52 / 16 * 1rem);
+        height: calc(52 / 16 * 1rem);
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: none;
+        position: relative;
+        z-index: 1;
+
+        &:before {
+          content: "";
+          width: 100%;
+          height: 100%;
+          background: var(--color-primary);
+          opacity: 0.2;
+          position: absolute;
+          display: block;
+          top: 0;
+          left: 0;
+        }
+      }
+
+      .cs-form {
+        border-radius: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        padding-inline: 1rem;
+        gap: 0.75rem;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .cs-label {
+        /* 14px - 16px */
+        font-size: clamp(0.875rem, 1.5vw, 1rem);
+        width: 100%;
+        color: var(--headerColor);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: calc(4 / 16 * 1rem);
+      }
+
+      .cs-input {
+        font-size: calc(16 / 16 * 1rem);
+        width: 100%;
+        height: calc(56 / 16 * 1rem);
+        padding: 0;
+        padding-left: calc(24 / 16 * 1rem);
+        color: var(--headerColor);
+        background-color: #f7f7f7;
+        border: none;
+        /* prevents padding from adding to height and width */
+        box-sizing: border-box;
+        &::placeholder {
+          color: #7d799c;
+          opacity: 0.6;
+        }
+      }
+
+      .lu-paraarea {
+        min-height: calc(120 / 16 * 1rem);
+        padding-top: calc(24 / 16 * 1rem);
+        margin-bottom: calc(12 / 16 * 1rem);
+        font-family: inherit;
+      }
+
+      .cs-button-solid {
+        font-size: calc(16 / 16 * 1rem);
+        /* 46px - 56px */
+        line-height: clamp(2.875rem, 5.5vw, 3.5rem);
+        text-decoration: none;
+        font-weight: 700;
+        text-align: center;
+        margin: 0;
+        color: #fff;
+        padding: 0 calc(24 / 16 * 1rem);
+        background-color: var(--color-primary);
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+        /* prevents padding from adding to the width */
+        box-sizing: border-box;
+
+        &:before {
+          content: "";
+          position: absolute;
+          height: 100%;
+          width: 0%;
+          background: #000;
+          opacity: 1;
+          top: 0;
+          left: 0;
+          z-index: -1;
+          border-radius: calc(4 / 16 * 1rem);
+          transition: width 0.3s;
+        }
+
+        &:hover {
+          &:before {
+            width: 100%;
+          }
+        }
+      }
+
+      .cs-submit {
+        text-transform: uppercase;
+        background-color: var(--color-primary) !important;
+        border: none;
+        transition:
+          color 0.3s,
+          background-color 0.3s;
+        cursor: pointer;
+        &:hover {
+          color: #fff;
+        }
+        &:disabled {
+          background-color: rgb(52 63 56 / 80%) !important;
+          pointer-events: none;
+        }
+      }
+
+      .cs-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      .cs-card-group {
+        width: 100%;
+        max-width: calc(522 / 16 * 1rem);
+        margin: 0;
+        padding: var(--sectionPadding);
+        /* prevents padding and border from affecting height and width */
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* 16px - 20px */
+        gap: clamp(1rem, 2.3vw, 1.25rem);
+        order: 1;
+        position: relative;
+        z-index: 1;
+      }
+
+      .cs-item {
+        text-align: left;
+        list-style: none;
+        width: 100%;
+        margin: 0;
+        /* 16px - 20px */
+        padding: clamp(1rem, 4vw, 2.5rem);
+        /* prevents padding and border from affecting height and width */
+        box-sizing: border-box;
+        background-color: #fff;
+        position: relative;
+        z-index: 1;
+
+        &:hover {
+          &:before {
+            opacity: 1;
+          }
+
+          .cs-header,
+          .cs-item-text,
+          .cs-link {
+            color: var(--text-white);
+          }
+
+          .lu-para,
+          .cs-link {
+            opacity: 1;
+          }
+
+          .cs-link {
+            &:hover {
+              color: var(--color-primary);
+            }
+          }
+
+          .cs-icon {
+            filter: grayscale(1) brightness(1000%);
+          }
+        }
+
+        &:before {
+          /* hover border and background */
+          content: "";
+          width: 100%;
+          height: 100%;
+          background: var(--backgroundColorWhite);
+          border: 1px solid var(--color-primary);
+          opacity: 0;
+          position: absolute;
+          display: block;
+          top: 0;
+          left: 0;
+          z-index: -1;
+          transition: opacity 0.3s;
+        }
+      }
+
+      .cs-header {
+        font-size: calc(20 / 16 * 1rem);
+        line-height: 1.2em;
+        text-align: inherit;
+        font-weight: 700;
+        /* 12px - 16px */
+        margin: 0 0 clamp(0.75rem, 1.6vw, 1rem);
+        display: block;
+        transition: color 0.3s;
+      }
+
+      .cs-item-text {
+        /* 14px - 16px */
+        font-size: clamp(0.875rem, 1.5vw, 1rem);
+        line-height: 1.5em;
+        text-align: inherit;
+        margin: 0 0 calc(4 / 16 * 1rem);
+        color: var(--bodyTextColor);
+        display: block;
+        transition: color 0.3s;
+      }
+
+      .cs-link {
+        /* 14px - 16px */
+        font-size: clamp(0.875rem, 1.5vw, 1rem);
+        line-height: 1.5em;
+        text-align: inherit;
+        margin: 0;
+        color: var(--bodyTextColor);
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: calc(4 / 16 * 1rem);
+        transition: color 0.3s;
+      }
+
+      .cs-icon {
+        width: calc(16 / 16 * 1rem);
+        height: auto;
+      }
+
+      .cs-background {
+        width: 100%;
+        height: 100%;
+        background-color: #1a1a1a;
+        // background-color: var(--backgroundColorWhite);
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+      }
+      .cs-button-solid-primary-to-white-round {
+        background-color: var(--color-primaryLight);
+
+        color: var(--text-white);
+        border-radius: 0;
+        padding: 1rem;
+        &:hover {
+          background-color: var(--color-primary);
+        }
+      }
+    }
+  }
+
+  /* Tablet - 768px */
+  @media only screen and (min-width: 48rem) {
+    #section-contact {
+      .cs-label {
+        &:nth-of-type(1),
+        &:nth-of-type(2) {
+          grid-column: span 6;
+        }
+      }
+    }
+  }
+
+  /* Desktop - 1024px */
+  @media only screen and (min-width: 64rem) {
+    #section-contact {
+      /* moved padding back to the section container */
+
+      .lu-container {
+        flex-direction: row;
+        align-items: center;
+        padding: var(--sectionPadding);
+        padding-block: 2rem;
+        justify-content: space-between;
+        margin: 0;
+        max-width: unset;
+        // gap: 1rem;
+      }
+
+      .cs-content {
+        text-align: left;
+        max-width: 32.75rem;
+        margin: 0;
+        padding: 2rem;
+        border-radius: 16px;
+        align-items: flex-start;
+      }
+
+      .cs-form-group {
+        // width: 43%;
+        // max-width: calc(522 / 16 * 1rem);
+        margin: 0;
+        flex: 1;
+        padding: 0;
+        padding-inline: 0;
+      }
+
+      .cs-form {
+        padding-inline: 2rem;
+        // padding: 0;
+      }
+
+      .cs-h3 {
+        padding-inline: 2rem;
+      }
+
+      .cs-wrapper {
+        // flex: none;
+        /* removes position from it so the absolutely positioned background group can now be positioned relative to the section container */
+        position: initial;
+        flex: 1;
+      }
+
+      .cs-background {
+        width: calc(100% / 2);
+        left: 0;
+        top: 0;
+      }
+
+      .cs-card-group {
+        padding: 0;
+      }
+    }
+  }
+</style>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer
+></script>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
+
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const submitBtn = document.getElementById(
+    "submit-message",
+  ) as HTMLButtonElement;
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    submitBtn.textContent = "Envoi en cours...";
+    submitBtn.disabled = true;
+
+    const formData = new FormData(form);
+    const { data, error } = await actions.contact(formData);
+
+    if (error) {
+      submitBtn.disabled = false;
+      if (isInputError(error)) {
+        // Find the first validation error message to display
+        const firstErrorMsg = Object.values(error.fields).flat()[0];
+        submitBtn.textContent = `❌ ${firstErrorMsg || "Vérifiez vos champs"}`;
+      } else {
+        submitBtn.textContent = `❌ ${error.message}`;
+      }
+      return;
+    }
+
+    // Succès : remplacement inline
+    form.innerHTML = `
+      <div class="cs-success">
+        <p>✅ Votre message a bien été envoyé !</p>
+        <p>Je reviendrai vers vous rapidement.</p>
+      </div>
+    `;
+  });
+</script>

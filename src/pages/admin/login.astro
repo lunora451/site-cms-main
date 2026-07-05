@@ -1,0 +1,213 @@
+---
+export const prerender = false;
+import AdminLayout from "../../layouts/AdminLayout.astro";
+
+// If already logged in, redirect to dashboard
+import { verifySession } from "../../libs/admin/auth";
+import { env } from "cloudflare:workers";
+
+const runtimeEnv = env;
+
+const cookieHeader = Astro.request.headers.get("cookie");
+const session = await verifySession(cookieHeader, env);
+if (session) return Astro.redirect("/");
+---
+
+<AdminLayout title="Connexion" authMode={true}>
+    <div class="login-card">
+        <div class="login-header">
+            <div class="login-logo">
+                <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    ><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg
+                >
+            </div>
+            <h1>CMS Admin</h1>
+            <p>Connectez-vous pour gérer votre contenu</p>
+        </div>
+
+        <form id="login-form" class="login-form-content" autocomplete="on">
+            <div class="login-error" id="login-error"></div>
+
+            <div class="admin-form-group">
+                <label for="username">Nom d'utilisateur</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    class="admin-input"
+                    placeholder="Identifiant"
+                    required
+                    autocomplete="username"
+                />
+            </div>
+
+            <div class="admin-form-group">
+                <label for="password">Mot de passe</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="admin-input"
+                    placeholder="••••••••"
+                    required
+                    autocomplete="current-password"
+                />
+            </div>
+
+            <button
+                type="submit"
+                class="admin-btn admin-btn-primary login-button"
+                id="login-btn"
+            >
+                <span id="login-btn-text">Se connecter</span>
+                <div
+                    class="admin-spinner"
+                    id="login-spinner"
+                    style="display:none;width:16px;height:16px;border-width:2px;border-color:rgba(255,255,255,0.2);border-top-color:#fff;"
+                >
+                </div>
+            </button>
+        </form>
+    </div>
+
+    <style is:global>
+        /* La carte de login s'appuie sur le système de design admin.css */
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            border: 1px solid var(--admin-border);
+            border-radius: 12px;
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.05),
+                0 1px 3px rgba(0, 0, 0, 0.02);
+            padding: 2.5rem;
+            animation: loginAppear 0.4s ease-out;
+        }
+
+        @keyframes loginAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            background: var(--admin-primary-subtle);
+            color: var(--admin-primary);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .login-header h1 {
+            font-family: var(--headerFont), serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--admin-text);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .login-header p {
+            font-size: 0.875rem;
+            color: var(--admin-text-secondary);
+            margin: 0;
+        }
+
+        .login-form-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .login-button {
+            width: 100%;
+            justify-content: center;
+            padding: 0.75rem !important;
+            font-size: 0.9375rem;
+            margin-top: 0.5rem;
+        }
+
+        .login-error {
+            display: none;
+            background: #fef2f2;
+            border: 1px solid #fee2e2;
+            color: #dc2626;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8125rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-error.visible {
+            display: block;
+        }
+    </style>
+
+    <script is:inline>
+        document
+            .getElementById("login-form")
+            .addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const errorEl = document.getElementById("login-error");
+                const btnText = document.getElementById("login-btn-text");
+                const spinner = document.getElementById("login-spinner");
+                const btn = document.getElementById("login-btn");
+
+                errorEl.classList.remove("visible");
+                btn.disabled = true;
+                btnText.textContent = "Connexion...";
+                spinner.style.display = "block";
+
+                try {
+                    const res = await fetch("/api/admin/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            username: document.getElementById("username").value,
+                            password: document.getElementById("password").value,
+                        }),
+                    });
+
+                    const data = await res.json();
+
+                    if (res.ok && data.success) {
+                        window.location.href = "/";
+                    } else {
+                        errorEl.textContent =
+                            data.error || "Erreur de connexion";
+                        errorEl.classList.add("visible");
+                    }
+                } catch (err) {
+                    errorEl.textContent = "Erreur réseau. Réessayez.";
+                    errorEl.classList.add("visible");
+                } finally {
+                    btn.disabled = false;
+                    btnText.textContent = "Se connecter";
+                    spinner.style.display = "none";
+                }
+            });
+    </script>
+</AdminLayout>

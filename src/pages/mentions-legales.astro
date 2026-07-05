@@ -1,0 +1,173 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BannerImage from "../assets/img/banner-pendule.jpg";
+---
+
+<Layout
+  title="Mentions Légales - Isabelle Magnétisme"
+  description="Mentions légales du site"
+>
+  <meta name="robots" content="noindex, follow" slot="noindex" />
+
+  <main class="legal-page">
+    <div class="lu-container">
+      <section class="legal-content">
+        <h2>1. Éditeur du site</h2>
+        <p>
+          Le site est édité par :<br />
+          <a href="https://share.google/JerVlUR7geFGVQNyy"
+            >Isabelle Troussicot - Magnétiseuse Energéticienne</a
+          ><br />
+          SIRET : 915 196 133 00010<br />
+          Téléphone : 06 85 88 01 82<br />
+          Email : isabelletroussicot80@gmail.com
+        </p>
+
+        <h2>2. Directeur de publication</h2>
+        <p>
+          <strong>Isabelle Troussicot</strong><br />
+          Contact : itthings451@gmail.com
+        </p>
+
+        <h2>3. Hébergeur du site</h2>
+        <p>
+          Le site est hébergé par :<br />
+          <strong>Hostinger International Ltd.</strong><br />
+          61 Lordou Vironos Street, 6023 Larnaca, Chypre<br />
+          Site web : <a
+            href="https://www.hostinger.fr"
+            target="_blank"
+            rel="noopener">www.hostinger.fr</a
+          >
+        </p>
+
+        <h2>4. Crédits et propriété intellectuelle</h2>
+        <p>
+          Les textes et contenus éditoriaux proviennent de ressources
+          personnelles.
+        </p>
+        <p>
+          Certaines images et icônes utilisées proviennent de banques d'images
+          libres de droits : Freepik, Pixabay et Pexels.
+        </p>
+
+        <h2>5. Données personnelles & Cookies</h2>
+
+        <p>
+          Ce site ne collecte aucune donnée personnelle automatiquement. Les
+          seules données recueillies le sont via le formulaire de contact (nom,
+          email, téléphone, message) et sont uniquement utilisées pour répondre
+          à vos demandes.
+        </p>
+
+        <p>
+          <strong>Cookies :</strong> Ce site utilise uniquement <strong
+            >Google reCAPTCHA v3</strong
+          > sur le formulaire de contact pour se protéger des spams. En cochant "J'accepte
+          les cookies nécessaires à la protection anti-spam", vous autorisez le dépôt
+          de cookies techniques par Google reCAPTCHA. Sans cette acceptation, le formulaire
+          ne peut pas fonctionner.
+        </p>
+
+        <p>
+          Aucun cookie de tracking, analytics ou publicitaire n'est utilisé sur
+          ce site.
+        </p>
+
+        <p>
+          <strong>Vos droits :</strong> Conformément au RGPD, vous pouvez accéder,
+          modifier ou supprimer vos données en nous contactant à <strong>
+            itthings451@gmail.com</strong
+          >
+        </p>
+
+        <h2>6. Limitation de responsabilité</h2>
+        <p>
+          Les informations contenues sur ce site sont aussi précises que
+          possible. Toutefois, le site ne pourra être tenu responsable des
+          omissions, des inexactitudes et des carences dans la mise à jour,
+          qu'elles soient de son fait ou du fait des tiers partenaires qui lui
+          fournissent ces informations.
+        </p>
+        <p>
+          Les soins de magnétisme et d'hypnose proposés ne se substituent en
+          aucun cas à un traitement médical. En cas de problème de santé,
+          consultez toujours un médecin.
+        </p>
+
+        <h2>7. Liens hypertextes</h2>
+        <p>
+          Le site peut contenir des liens hypertextes vers d'autres sites.
+          Isabelle Troussicot n'exerce aucun contrôle sur ces sites et décline
+          toute responsabilité quant à leur contenu.
+        </p>
+
+        <h2>8. Droit applicable</h2>
+        <p>
+          Les présentes mentions légales sont régies par le droit français. En
+          cas de litige et à défaut d'accord amiable, le tribunal compétent sera
+          celui du ressort du siège social de l'entreprise.
+        </p>
+
+        <p class="last-update">
+          <em>Dernière mise à jour : Décembre 2025</em>
+        </p>
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<style lang="scss">
+  .legal-page {
+    max-width: 1400px;
+    margin: auto;
+    background: white;
+  }
+
+  .lu-container {
+    max-width: 900px;
+    padding-block: var(--sectionPadding);
+  }
+
+  .legal-content {
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin: 2.5rem 0 1rem 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.8em;
+      color: var(--bodyTextColor);
+      margin: 0 0 1.25rem 0;
+
+      strong {
+        font-weight: 700;
+        color: var(--headerColor);
+      }
+    }
+
+    a {
+      color: var(--color-primary);
+      text-decoration: underline;
+
+      &:hover {
+        color: var(--color4);
+      }
+    }
+
+    .last-update {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e0e0e0;
+      font-style: italic;
+      color: #666;
+    }
+  }
+</style>

@@ -1,0 +1,305 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+
+const ateliers = await getCollection("atelier");
+
+// Sort by date (descending, soonest first)
+ateliers.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const title = "Ateliers & Stages | Développement Personnel & Bien-être";
+const description =
+  "Découvrez nos prochains ateliers et stages : magnétisme, bien-être et développement personnel. Inscrivez-vous pour une expérience transformative.";
+---
+
+<Layout title={title} description={description}>
+  <main class="ateliers-page">
+    <section class="hero-section">
+      <div class="lu-container">
+        <span class="lu-topper">Partage & Apprentissage</span>
+        <h1 class="lu-h1">Nos Ateliers</h1>
+        <p class="lu-para intro-text">
+          Des moments privilégiés pour explorer votre potentiel, apprendre des
+          techniques de soin et vous reconnecter zefà votre essence profonde
+          dans un cadre bienveillant.
+        </p>
+      </div>
+    </section>
+
+    <section class="ateliers-grid-section">
+      <div class="lu-container">
+        <div class="ateliers-grid">
+          {
+            ateliers.map((atelier) => (
+              <article class="atelier-card">
+                <div class="card-image">
+                  <Image
+                    src={atelier.data.pictureHeader}
+                    alt={atelier.data.alt}
+                    width={600}
+                    height={400}
+                  />
+                  <div class="card-price">{atelier.data.prix}€</div>
+                </div>
+
+                <div class="card-content">
+                  <div class="card-header">
+                    <span class="card-date">
+                      {atelier.data.date.toLocaleDateString("fr-FR", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </span>
+                    <span class="card-time">{atelier.data.horaire}</span>
+                  </div>
+
+                  <h2 class="lu-h3 card-title">{atelier.data.title}</h2>
+
+                  <p class="card-description">{atelier.data.description}</p>
+
+                  <div class="card-footer">
+                    <div class="card-location">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <>
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                          <circle cx="12" cy="10" r="3" />
+                        </>
+                      </svg>
+                      <span>{atelier.data.lieu}</span>
+                    </div>
+
+                    <a
+                      href={atelier.data.lieuUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="location-link"
+                    >
+                      Voir sur la carte
+                    </a>
+                  </div>
+
+                  <a href="/contact" class="lu-button book-button">
+                    S'inscrire à l'atelier
+                  </a>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="lu-container">
+        <div class="cta-box">
+          <h2 class="lu-h2">Un atelier sur mesure ?</h2>
+          <p class="lu-para">
+            Vous souhaitez organiser un atelier pour un groupe d'amis ou au sein
+            de votre association ? N'hésitez pas à me contacter pour discuter de
+            vos besoins.
+          </p>
+          <a href="/contact" class="lu-button">Me contacter</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style is:global lang="scss">
+  .ateliers-page {
+    padding-top: 4rem;
+
+    .hero-section {
+      text-align: center;
+      padding: clamp(4rem, 8vw, 8rem) 0;
+      background: linear-gradient(to bottom, var(--color-primary-50), white);
+
+      .intro-text {
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 1.25rem;
+      }
+    }
+
+    .ateliers-grid-section {
+      padding: 4rem 0;
+    }
+
+    .ateliers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 3rem;
+
+      @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .atelier-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+      transition:
+        transform 0.3s var(--ease2),
+        box-shadow 0.3s var(--ease2);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+
+      &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-image {
+        position: relative;
+        height: 280px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .card-price {
+          position: absolute;
+          top: 1.5rem;
+          right: 1.5rem;
+          background: white;
+          padding: 0.5rem 1.25rem;
+          border-radius: 100px;
+          font-weight: 700;
+          font-family: var(--headerFont);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          color: var(--color-primary-700);
+        }
+      }
+
+      .card-content {
+        padding: 2.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        color: var(--color-primary-600);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .card-title {
+        margin-bottom: 1.5rem;
+        color: var(--neutral-10);
+      }
+
+      .card-description {
+        color: var(--neutral-7);
+        line-height: 1.7;
+        margin-bottom: 2rem;
+        flex-grow: 1;
+        white-space: pre-wrap;
+      }
+
+      .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1.5rem;
+        border-top: 1px solid #f0f0f0;
+        margin-bottom: 2rem;
+
+        .card-location {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.9rem;
+          color: var(--neutral-6);
+
+          svg {
+            color: var(--color-primary);
+          }
+        }
+
+        .location-link {
+          font-size: 0.85rem;
+          color: var(--color-primary-600);
+          text-decoration: underline;
+          font-weight: 500;
+
+          &:hover {
+            color: var(--color-primary-800);
+          }
+        }
+      }
+
+      .book-button {
+        width: 100%;
+        text-align: center;
+        background: var(--color-primary);
+        color: white;
+        padding: 1rem;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: background 0.2s;
+
+        &:hover {
+          background: var(--color-primary-600);
+          color: white;
+        }
+      }
+    }
+
+    .cta-section {
+      padding: 8rem 0;
+
+      .cta-box {
+        background: var(--neutral-10);
+        color: white;
+        padding: clamp(3rem, 6vw, 6rem);
+        border-radius: 40px;
+        text-align: center;
+
+        h2 {
+          color: white;
+          margin-bottom: 1.5rem;
+        }
+
+        p {
+          color: var(--neutral-3);
+          max-width: 600px;
+          margin: 0 auto 3rem auto;
+        }
+
+        .lu-button {
+          background: var(--white);
+          color: var(--black);
+
+          &:hover {
+            background: var(--color-primary);
+            color: white;
+          }
+        }
+      }
+    }
+  }
+</style>

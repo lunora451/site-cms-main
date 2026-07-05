@@ -1,0 +1,223 @@
+.cs-button-solid-red-to-green {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--headerFont);
+  text-align: center;
+  text-decoration: none;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0.75rem 2rem;
+  color: var(--text-black);
+  background-color: var(--bg-light);
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: color 0.3s, background 0.3s;
+  font-size: var(--size18);
+  max-width: 140px;
+
+
+  &::before {
+    content: "";
+    width: 0%;
+    height: 100%;
+    background: var(--color-primary);
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: width 0.3s;
+  }
+
+  &:hover {
+    color: #fff;
+
+    &::before {
+      width: 100%;
+    }
+  }
+}
+
+
+.cs-button-solid-primary-to-white {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--headerFont);
+  text-align: center;
+  text-decoration: none;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0.75rem 2rem;
+  border-radius: 2rem;
+  color: #fff;
+  background-color: var(--color-primary);
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: color 0.3s, background 0.3s;
+  font-size: var(--size18);
+
+
+  &::before {
+    content: "";
+    width: 0%;
+    height: 100%;
+    background: white;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: width 0.3s;
+  }
+
+  &:hover {
+    color: var(--bodyTextColor);
+  }
+
+  &:hover::before {
+    width: 100%;
+
+  }
+}
+
+
+.cs-button-solid-white-to-black {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--headerFont);
+  text-align: center;
+  text-decoration: none;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0.75rem 2rem;
+  color: var(--text-black);
+  background-color: var(--backgroundColorWhite);
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: color 0.3s, background 0.3s;
+  font-size: var(--size18);
+  max-width: 140px;
+
+  &::before {
+    content: "";
+    width: 0%;
+    height: 100%;
+    background: var(--backgroundColorBlack);
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: width 0.3s;
+  }
+
+  &:hover {
+    color: white;
+
+    &::before {
+      width: 100%;
+
+    }
+  }
+}
+
+
+.cs-button-solid-white-to-primary-round {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--headerFont);
+  text-align: center;
+  text-decoration: none;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0.5rem 1.5rem;
+  color: var(--text-black);
+  background-color: #fff;
+  display: inline-block;
+  position: relative;
+  border-radius: 2rem;
+  border: 1px solid var(--color-primary);
+  z-index: 1;
+  overflow: hidden;
+  transition: color 0.3s, background 0.4s, border-color 0.3s;
+  font-size: var(--size18);
+
+  &:hover {
+    color: white;
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+}
+
+.cs-button-solid-primary-to-white-round {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--headerFont);
+  text-align: center;
+  text-decoration: none;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0.5rem 1.5rem;
+  color: white;
+  background-color: var(--color-primary);
+  display: inline-block;
+  position: relative;
+  border-radius: 2rem;
+  border: 1px solid var(--color-primary);
+  z-index: 1;
+  overflow: hidden;
+  transition: color 0.3s, background 0.3s;
+  font-size: var(--size18);
+
+  &:hover {
+    color: var(--text-black);
+    background: white;
+    border-color: var(--color-primary);
+  }
+}
+
+.image-16-9 {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  max-width: 600px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.image-9-16 {
+  aspect-ratio: 9 / 16;
+  width: 100%;
+  max-width: 600px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.image-auto {
+  aspect-ratio: auto;
+  width: 100%;
+  max-width: 600px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.image-1-1 {
+  aspect-ratio: 1/1;
+  width: 100%;
+  max-width: 600px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.image-3-4 {
+  aspect-ratio: 3/4;
+  width: 100%;
+  max-width: 600px;
+  object-fit: cover;
+  border-radius: 8px;
+}

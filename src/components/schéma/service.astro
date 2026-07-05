@@ -1,0 +1,57 @@
+---
+// components/ServiceSchema.astro
+interface Props {
+  serviceType: string; //https://schema.org/HealthCare
+  serviceName: string;
+  serviceId: string;
+  serviceDescription: string;
+}
+const { serviceId, serviceType, serviceName, serviceDescription } = Astro.props;
+
+const baseUrl = Astro.site?.origin || "";
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@id": serviceId,
+  "@type": "Service",
+  serviceType: serviceType,
+  name: serviceName,
+  description: serviceDescription,
+  provider: {
+    "@type": "LocalBusiness",
+    "@id": `${baseUrl}/#organization`,
+    name: "",
+    image: `${baseUrl}/assets/images/logo.png`,
+    telephone: "",
+    email: "[EMAIL_ADDRESS]",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "24 rue de l'église",
+      addressLocality: "Scey-sur-Saône-et-Saint-Albin",
+      addressRegion: "Haute-Saône",
+      postalCode: "70360",
+      addressCountry: "FR",
+    },
+  },
+  areaServed: [
+    {
+      "@type": "Place",
+      name: "Scey-sur-Saône",
+    },
+    {
+      "@type": "Place",
+      name: "Vesoul",
+    },
+    {
+      "@type": "AdministrativeArea",
+      name: "Haute-Saône",
+    },
+    {
+      "@type": "AdministrativeArea",
+      name: "Franche-Comté",
+    },
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />

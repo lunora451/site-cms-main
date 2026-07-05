@@ -1,0 +1,468 @@
+---
+import "../components/styles/base/reset.css";
+import "../components/styles/base/button.css";
+import "../components/styles/base/article.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import font3 from "../assets/fonts/charter_bold.woff2";
+import font2 from "../assets/fonts/charter_regular.woff2";
+import seoConfigRaw from "../data/seo-config.json";
+
+const { title, description } = Astro.props;
+
+// SEO: URL de base du site
+const siteUrl = Astro.site || Astro.url.origin;
+
+const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
+
+// ─── SEO Config Resolution (CMS page → CMS global → props) ─────
+const seoConfig = seoConfigRaw as any;
+const pagePath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const pageSeo = seoConfig?.pages?.[pagePath] || {};
+const globalOg = seoConfig?.global?.og || {};
+const globalJsonLd = seoConfig?.global?.jsonLd || [];
+
+console.log("pageSEO", pageSeo);
+console.log("globalOg", globalOg);
+console.log("globalJsonLd", globalJsonLd);
+// Meta (page CMS overrides props)
+const seoTitle = pageSeo.metaTitle || title;
+const seoDescription = pageSeo.metaDescription || description;
+
+// Open Graph (page CMS → global CMS → props)
+const ogTitle = pageSeo.og?.title || seoTitle;
+const ogDescription = pageSeo.og?.description || seoDescription;
+const ogImage = pageSeo.og?.image || globalOg.defaultImage || "";
+const ogImageAlt = pageSeo.og?.imageAlt || globalOg.defaultImageAlt || "";
+const ogType = pageSeo.og?.type || globalOg.type || "website";
+const ogSiteName = globalOg.siteName || "";
+const ogLocale = globalOg.locale || "fr_FR";
+
+// JSON-LD: merge global + page-specific
+const pageJsonLd = pageSeo.jsonLd || [];
+const allJsonLd = [...globalJsonLd, ...pageJsonLd];
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Title & Description -->
+    <title>{seoTitle}</title>
+    <meta name="description" content={seoDescription} />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalURL} />
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preload" href={font2} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={font3} as="font" type="font/woff2" crossorigin />
+
+    <!-- Social link facebook & Open Graph -->
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:site_name" content={ogSiteName} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content={ogLocale} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+
+    <slot name="schemaService" />
+    <slot name="noindex" />
+
+    <!-- JSON-LD Structured Data (CMS-managed) -->
+    {
+      allJsonLd.length > 0 && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(allJsonLd)}
+        />
+      )
+    }
+
+    <!-- <ThemeScript /> -->
+  </head>
+  <body>
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>
+
+<style is:global lang="scss">
+  :root {
+    /* ══════════════════════════════════════════ */
+    /* 🎯 TA SEULE DÉCISION : Le Hue (0-360) */
+    /* ══════════════════════════════════════════ */
+    --hue-primary: 18; /* 👈 Change uniquement ça */
+
+    /* ══════════════════════════════════════════ */
+    /* 🔧 Auto-généré (tu peux ajuster si besoin) */
+    /* ══════════════════════════════════════════ */
+
+    --hue-secondary: 326;
+
+    --hue-neutral: 0;
+
+    /* Semantic colors (fixes, universels) */
+    --hue-success: 145; /* Vert */
+    --hue-warning: 45; /* Orange/Jaune */
+    --hue-danger: 5; /* Rouge */
+    --hue-info: 210; /* Bleu */
+
+    /* ══════════════════════════════════════════ */
+    /* 📊 PALETTE GENERATOR */
+    /* ══════════════════════════════════════════ */
+
+    /* Chroma levels */
+    --chroma-full: 0.2;
+    --chroma-muted: 0.08;
+
+    /* === PRIMARY === */
+    --color-primary-50: oklch(97% 0.02 var(--hue-primary));
+    --color-primary-100: oklch(94% 0.04 var(--hue-primary));
+    --color-primary-200: oklch(86% 0.08 var(--hue-primary));
+    --color-primary-300: oklch(75% 0.14 var(--hue-primary));
+    --color-primary-400: oklch(65% 0.17 var(--hue-primary));
+    --color-primary-500: oklch(55% var(--chroma-full) var(--hue-primary));
+    --color-primary-600: oklch(47% var(--chroma-full) var(--hue-primary));
+    --color-primary-700: oklch(39% 0.16 var(--hue-primary));
+    --color-primary-800: oklch(31% 0.13 var(--hue-primary));
+    --color-primary-900: oklch(23% 0.1 var(--hue-primary));
+    --color-primary-950: oklch(15% 0.07 var(--hue-primary));
+
+    /* === SECONDARY === */
+    --color-secondary-50: oklch(97% 0.02 var(--hue-secondary));
+    --color-secondary-100: oklch(94% 0.04 var(--hue-secondary));
+    --color-secondary-200: oklch(86% 0.07 var(--hue-secondary));
+    --color-secondary-300: oklch(75% 0.1 var(--hue-secondary));
+    --color-secondary-400: oklch(65% 0.12 var(--hue-secondary));
+    --color-secondary-500: oklch(55% 0.14 var(--hue-secondary));
+    --color-secondary-600: oklch(47% 0.14 var(--hue-secondary));
+    --color-secondary-700: oklch(39% 0.12 var(--hue-secondary));
+    --color-secondary-800: oklch(31% 0.1 var(--hue-secondary));
+    --color-secondary-900: oklch(23% 0.08 var(--hue-secondary));
+
+    /* === SEMANTIC COLORS === */
+    /* Success */
+    --success-100: oklch(94% 0.05 var(--hue-success));
+    --success-500: oklch(55% 0.16 var(--hue-success));
+    --success-700: oklch(40% 0.14 var(--hue-success));
+
+    /* Warning */
+    --warning-100: oklch(94% 0.06 var(--hue-warning));
+    --warning-500: oklch(75% 0.15 var(--hue-warning));
+    --warning-700: oklch(55% 0.14 var(--hue-warning));
+
+    /* Danger */
+    --danger-100: oklch(94% 0.04 var(--hue-danger));
+    --danger-500: oklch(55% 0.2 var(--hue-danger));
+    --danger-700: oklch(40% 0.18 var(--hue-danger));
+
+    /* Info */
+    --info-100: oklch(94% 0.04 var(--hue-info));
+    --info-500: oklch(55% 0.15 var(--hue-info));
+    --info-700: oklch(40% 0.14 var(--hue-info));
+
+    /* ══════════════════════════════════════════ */
+    /* 🎭 SEMANTIC TOKENS - Light Mode */
+    /* ══════════════════════════════════════════ */
+
+    --white: oklch(1 0 0);
+    --neutral-1: oklch(0.985 0 0);
+    --neutral-2: oklch(0.97 0 0);
+    --neutral-3: oklch(0.922 0 0);
+    --neutral-4: oklch(0.87 0 0);
+    --neutral-5: oklch(0.708 0 0);
+    --neutral-6: oklch(0.556 0 0);
+    --neutral-7: oklch(0.439 0 0);
+    --neutral-8: oklch(0.371 0 0);
+    --neutral-9: oklch(0.269 0 0);
+    --neutral-10: oklch(0.205 0 0);
+    --neutral-11: oklch(0.145 0 0);
+    --black: oklch(0 0 0);
+
+    --bg-dark: var(--neutral-4);
+    --bg: var(--neutral-3);
+    --bg-light: var(--neutral-1);
+
+    /* Primary */
+    --color-primary: var(--color-primary-500);
+    --color-primary-hover: var(--color-primary-600);
+    --color-primary-active: var(--color-primary-700);
+    --color-primary-subtle: var(--color-primary-100);
+    --color-on-primary-subtle: var(--color-primary-700);
+
+    /* Secondary */
+    --color-secondary: var(--color-secondary-600);
+    --color-secondary-hover: var(--color-secondary-700);
+    --color-secondary-active: var(--color-secondary-800);
+    --color-secondary-subtle: var(--color-secondary-100);
+    --color-on-secondary-subtle: var(--color-secondary-800);
+
+    --textColor: var(--neutral-9);
+    --textColorInverse: var(--neutral-1);
+    --bodyTextColor: var(--black);
+    /* Text */
+    --text-white: var(--white);
+    --text-white-hover: var(--white);
+
+    /* Text */
+    --text-black: var(--black);
+    --text-black-hover: var(--black);
+
+    /* Borders */
+    --border-white: var(--neutral-4);
+    --border-white-hover: var(--neutral-6);
+    --border-black: var(--neutral-8);
+    --border-black-hover: var(--black);
+    --border-primary: var(--color-primary-400);
+    --border-primary-hover: var(--color-primary-500);
+    --border-secondary: var(--color-secondary-300);
+    --border-secondary-hover: var(--color-secondary-500);
+
+    /* States */
+    --state-hover-white: oklch(100% 0 0 / 0.04);
+    --state-focus-white: oklch(100% 0 0 / 0.08);
+    --state-active-white: oklch(100% 0 0 / 0.12);
+    --state-hover-neutral: oklch(0% 0 0 / 0.04);
+    --state-hover: oklch(55% var(--chroma-full) var(--hue-secondary) / 0.04);
+    --state-focus: oklch(0% 0 0 / 0.08);
+    --state-active: oklch(0% 0 0 / 0.12);
+    --state-disabled-bg: var(--neutral-100);
+    --state-disabled-text: var(--neutral-400);
+
+    /* Semantic */
+    --color-success: var(--success-500);
+    --color-on-success: white;
+
+    --color-warning: var(--warning-500);
+    --color-on-warning: var(--neutral-900);
+
+    --color-danger: var(--danger-500);
+    --color-on-danger: white;
+
+    --color-info: var(--info-500);
+    --color-on-info: white;
+
+    /* ══════════════════════════════════════════ */
+    /* 🌙 DARK MODE */
+    /* ══════════════════════════════════════════ */
+
+    --paddingNavClamp: clamp(0.75rem, 2vw, 1.5rem);
+    --ease2: cubic-bezier(0.3, 0.6, 0.24, 1);
+    --sectionPadding: clamp(3.75rem, 7.82vw, 6.25rem) 0;
+    --headerFontSize: clamp(1.9375rem, 3.9vw, 3.0625rem);
+
+    --h6: clamp(1.125rem, 0.16vw + 1.045rem, 1.25rem);
+    --h5: clamp(1.438rem, 0.16vw + 1.358rem, 1.563rem);
+    --h4: clamp(1.75rem, 0.321vw + 1.589rem, 2rem);
+    --h3: clamp(2rem, 0.481vw + 1.759rem, 2.375rem);
+    --h2: clamp(2.438rem, 0.721vw + 2.078rem, 3rem);
+    --h1: clamp(3rem, 1.042vw + 2.479rem, 3.813rem);
+    --bodyFontSize: 1rem;
+    --size14-16: clamp(0.875rem, 0.16vw + 0.795rem, 1rem);
+    --size16-18: clamp(1rem, 0.22vw + 0.92rem, 1.125rem);
+    --sizeButton: clamp(1.125rem, 0.16vw + 1.045rem, 1.25rem);
+    --sizeSubtitle: clamp(1.125rem, 0.16vw + 1.045rem, 1.25rem);
+    --sizeTitle: clamp(1.9375rem, 1.442vw + 1.217rem, 3.0625rem);
+    --sizeTopper: clamp(0.875rem, 0.3vw + 0.795rem, 1rem);
+    --sizePara: clamp(1rem, 0.3vw + 0.92rem, 1.125rem);
+    --headerFont: "header", "headerFallback", Georgia, sans-serif;
+    --bodyFont: "body", "bodyFallBack", Arial, sans-serif;
+
+    --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    --shadow-s: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    --shadow-m: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    --shadow-l:
+      0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    --shadow-xl:
+      0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+
+    //darkmode
+    --color-primaryDark: #fff;
+    --backgroundColorDark: #030f18;
+    --bodyTextColorDark: #f0f0f0;
+    --headerColorDark: #fff;
+
+    // rgb(243 244 246)
+  }
+
+  body {
+    font-size: 1rem;
+    line-height: 150%;
+    font-family: var(--bodyFont);
+  }
+
+  h1 {
+    line-height: 105%;
+    font-size: var(--h1);
+    font-family: var(--headerFont);
+  }
+  h2 {
+    line-height: 120%;
+    font-family: var(--headerFont);
+    font-size: var(--h2);
+  }
+  h3 {
+    line-height: 140%;
+    font-family: var(--headerFont);
+    font-size: var(--h3);
+  }
+  h4 {
+    line-height: 140%;
+    font-family: var(--headerFont);
+    font-size: var(--h4);
+  }
+
+  .lu-h6 {
+    line-height: 145%;
+    letter-spacing: -0.5%;
+    margin-bottom: 0.25rem;
+    font-size: var(--h6);
+  }
+  .lu-h5 {
+    line-height: 140%;
+    letter-spacing: -0.75px;
+    margin-bottom: 0.5rem;
+    font-size: var(--h5);
+  }
+  .lu-h4 {
+    line-height: 120%;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+    font-size: var(--h4);
+  }
+  .lu-h3 {
+    line-height: 120%;
+    letter-spacing: -1.5px;
+    margin-bottom: 1.5rem;
+    font-size: var(--h3);
+  }
+  .lu-h2 {
+    line-height: 110%;
+    letter-spacing: -1.75px;
+    font-size: var(--h2);
+    margin-bottom: 2rem;
+  }
+  .lu-h1 {
+    line-height: 100%;
+    letter-spacing: -2px;
+    margin-bottom: 2rem;
+    font-size: var(--h1);
+  }
+
+  .lu-topper {
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: var(--headerFont);
+    font-size: 1rem;
+    line-height: 140%;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .lu-title {
+    color: var(--neutral-10);
+    letter-spacing: 1.5px;
+    font-size: 2.25rem;
+    line-height: 100%;
+    font-family: var(--headerFont);
+    margin-bottom: 2rem;
+  }
+
+  .lu-para {
+    font-size: var(--bodyFontSize);
+    color: var(--textColor);
+    font-family: var(--bodyFont);
+    letter-spacing: 0px;
+    line-height: 150%;
+    margin-bottom: 0.5rem;
+  }
+
+  .lu-sub-title {
+    font-size: var(--sizeSubtitle);
+    line-height: 115%;
+    color: var(--neutral-10);
+    font-family: var(--bodyFont);
+  }
+
+  .lu-button {
+    text-transform: uppercase;
+    font-size: var(--sizeButton);
+    line-height: 120%;
+    color: var(--text-black);
+    font-family: var(--headerFont);
+  }
+
+  .lu-container {
+    margin: auto;
+    max-width: 1400px;
+    padding-inline: 1rem;
+  }
+
+  .lu-grid {
+    display: grid;
+    max-width: 1300px;
+    grid-template-columns: repeat(24, 1fr);
+    padding-inline: 1rem;
+  }
+
+  @font-face {
+    font-style: normal;
+    font-family: "body";
+    font-weight: 400;
+    font-display: swap;
+    font-stretch: normal;
+    src: url("../assets/fonts/charter_regular.woff2") format("woff2");
+    ascent-override: 95%;
+    descent-override: 25%;
+    line-gap-override: 0%;
+  }
+
+  @font-face {
+    font-style: normal;
+    font-family: "header";
+    font-weight: 700;
+    font-display: swap;
+    src: url("../assets/fonts/charter_bold.woff2") format("woff2");
+    ascent-override: 95%;
+    descent-override: 25%;
+    line-gap-override: 0%;
+  }
+
+  @font-face {
+    font-style: normal;
+    font-family: "bodyFallback";
+    font-weight: 400;
+    font-display: swap;
+    src: local("Georgia");
+  }
+
+  @font-face {
+    font-style: normal;
+    font-family: "headerFallback";
+    font-weight: 700;
+    font-display: swap;
+    src: local("Georgia");
+  }
+</style>

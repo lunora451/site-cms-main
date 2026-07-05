@@ -1,0 +1,145 @@
+---
+export const prerender = false;
+import Layout from "../../../layouts/Layout.astro";
+
+// This is a dedicated page used strictly by the CMS iframe to render a live preview.
+// It contains the exact HTML structure of a workshop, with classes hooked up to the CMS fields.
+---
+
+<Layout>
+  <div class="atelier-preview">
+    <div class="atelier-card">
+      <div class="atelier-image-wrapper">
+        <img
+          class="pictureHeader"
+          src="https://placehold.co/800x400/eee/31343C?text=Image+Workshop"
+          alt="Preview Image"
+        />
+      </div>
+
+      <div class="atelier-content">
+        <h1 class="title">Titre de l'atelier</h1>
+        
+        <div class="atelier-meta">
+          <div class="meta-item">
+            <span class="label">Date :</span>
+            <span class="date">21 Mars 2026</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Horaire :</span>
+            <span class="horaire">13h30 - 17h30</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Prix :</span>
+            <span class="prix">90</span>€
+          </div>
+        </div>
+
+        <div class="atelier-location">
+          <span class="label">Lieu :</span>
+          <span class="lieu">Le Comptoir des Minéraux</span>
+        </div>
+
+        <div class="description-section">
+          <h3>Programme / Description</h3>
+          <div class="description">Le contenu de la description apparaîtra ici...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style is:global lang="scss">
+  .atelier-preview {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+
+    .atelier-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border: 1px solid #eee;
+    }
+
+    .atelier-image-wrapper {
+      width: 100%;
+      height: 300px;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .atelier-content {
+      padding: 2.5rem;
+
+      h1 {
+        font-family: var(--headerFont);
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        color: #1a1a1a;
+      }
+    }
+
+    .atelier-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #f0f0f0;
+
+      .meta-item {
+        display: flex;
+        flex-direction: column;
+        
+        .label {
+          font-size: 0.8rem;
+          color: #666;
+          text-transform: uppercase;
+          margin-bottom: 0.25rem;
+        }
+        
+        span:not(.label) {
+          font-weight: 600;
+          font-size: 1.1rem;
+        }
+      }
+    }
+
+    .atelier-location {
+      margin-bottom: 2rem;
+      
+      .label {
+        font-size: 0.8rem;
+        color: #666;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+      
+      .lieu {
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+    }
+
+    .description-section {
+      h3 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+      
+      .description {
+        white-space: pre-wrap;
+        line-height: 1.6;
+        color: #444;
+      }
+    }
+  }
+</style>

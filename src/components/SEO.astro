@@ -1,0 +1,77 @@
+---
+// src/components/SEO.astro
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string | URL;
+  type?: "website" | "article";
+}
+
+const {
+  title: propTitle,
+  description: propDescription,
+  image: propImage,
+  canonicalURL: propCanonical,
+  type = "website",
+} = Astro.props;
+
+const siteTitle = "site-simple-contact-cms"; // Configurable site name
+const defaultDesc =
+  "Découvrez nos dernières actualités, tutoriels et réflexions sur le design et le développement.";
+const siteUrl = Astro.site || Astro.url.origin;
+
+const title = propTitle ? `${propTitle} | ${siteTitle}` : siteTitle;
+const description = propDescription || defaultDesc;
+const canonicalURL = propCanonical || new URL(Astro.url.pathname, siteUrl);
+
+// Image logic: use absolute URLs for OG images
+const ogImage = propImage
+  ? new URL(propImage, siteUrl).href
+  : new URL("/og-default.png", siteUrl).href;
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content={siteTitle} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImage} />
+
+<!-- Robots -->
+<meta
+  name="robots"
+  content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+/>
+
+<!-- Links -->
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title="Suivre le Blog via RSS"
+  href="/rss.xml"
+/>

@@ -1,0 +1,250 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BannerImage from "../assets/img/banner-pendule.jpg";
+---
+
+<Layout
+  title="Politique de Confidentialité - Isabelle Magnétisme"
+  description="Politique de confidentialité et protection des données personnelles du site"
+>
+  <meta name="robots" content="noindex, follow" slot="noindex" />
+
+  <main class="legal-page">
+    <div class="lu-container">
+      <section class="legal-content">
+        <h2>1. Responsable du traitement des données</h2>
+        <p>
+          Le responsable du traitement de vos données personnelles est :<br />
+          <strong>Isabelle Troussicot</strong><br />
+          Email : isabelletroussicot80@gmail.com<br />
+          Téléphone : 06 85 88 01 82
+        </p>
+
+        <h2>2. Données collectées</h2>
+
+        <h3>2.1 Navigation sur le site</h3>
+        <p>
+          Lors de votre navigation sur le site, <strong
+            >aucune donnée personnelle n'est collectée automatiquement</strong
+          >. Nous n'utilisons aucun outil de tracking, analytics ou cookie
+          publicitaire.
+        </p>
+
+        <h3>2.2 Formulaire de contact</h3>
+        <p>
+          Lorsque vous utilisez le formulaire de contact, nous collectons les
+          informations suivantes :
+        </p>
+        <ul>
+          <li>Nom et prénom</li>
+          <li>Adresse email</li>
+          <li>Numéro de téléphone (optionnel)</li>
+          <li>Message</li>
+        </ul>
+        <p>
+          Ces informations sont <strong
+            >nécessaires pour traiter votre demande</strong
+          > et vous recontacter.
+        </p>
+
+        <h2>3. Utilisation des données</h2>
+        <p>
+          Les données collectées via le formulaire de contact sont utilisées
+          uniquement pour :
+        </p>
+        <ul>
+          <li>Répondre à vos questions et demandes de renseignements</li>
+          <li>Prendre rendez-vous pour une consultation</li>
+          <li>Vous contacter concernant nos services</li>
+        </ul>
+        <p>
+          <strong>Vos données ne sont jamais :</strong>
+        </p>
+        <ul>
+          <li>Vendues ou louées à des tiers</li>
+          <li>
+            Utilisées à des fins commerciales ou marketing sans votre
+            consentement
+          </li>
+          <li>Partagées avec des partenaires externes</li>
+        </ul>
+
+        <h2>4. Conservation des données</h2>
+        <p>
+          Les informations envoyées via le formulaire de contact sont transmises
+          par email et
+          <strong>ne sont pas stockées dans une base de données</strong>.
+        </p>
+        <p>
+          Les emails contenant vos données sont conservés dans la boîte mail
+          pendant la durée nécessaire au traitement de votre demande, puis
+          supprimés ou archivés conformément aux obligations légales.
+        </p>
+
+        <h2>5. Cookies et technologies similaires</h2>
+
+        <h3>5.1 Google reCAPTCHA</h3>
+        <p>
+          Le formulaire de contact utilise <strong>Google reCAPTCHA v3</strong> pour
+          se protéger contre les spams et les robots automatisés.
+        </p>
+        <p>
+          <strong>Fonctionnement :</strong> Lorsque vous cochez la case "J'accepte
+          les cookies nécessaires à la protection anti-spam", Google reCAPTCHA dépose
+          des cookies techniques pour analyser votre comportement de navigation et
+          déterminer si vous êtes un humain.
+        </p>
+        <p>
+          <strong>Données collectées par reCAPTCHA :</strong> Adresse IP, informations
+          du navigateur, comportement de navigation sur la page.
+        </p>
+        <p>
+          Ces données sont traitées par Google conformément à sa
+          <a
+            href="https://policies.google.com/privacy"
+            target="_blank"
+            rel="noopener">politique de confidentialité</a
+          >.
+        </p>
+
+        <h3>5.2 Autres cookies</h3>
+        <p>
+          Ce site <strong>n'utilise aucun autre cookie</strong> de tracking, analytics,
+          publicitaire ou de mesure d'audience.
+        </p>
+
+        <h2>6. Vos droits (RGPD)</h2>
+        <p>
+          Conformément au Règlement Général sur la Protection des Données (RGPD)
+          et à la loi « Informatique et Libertés », vous disposez des droits
+          suivants concernant vos données personnelles :
+        </p>
+        <ul>
+          <li>
+            <strong>Droit d'accès :</strong> Vous pouvez demander une copie des données
+            que nous détenons sur vous
+          </li>
+          <li>
+            <strong>Droit de rectification :</strong> Vous pouvez demander la correction
+            de données inexactes
+          </li>
+          <li>
+            <strong>Droit à l'effacement :</strong> Vous pouvez demander la suppression
+            de vos données
+          </li>
+          <li>
+            <strong>Droit d'opposition :</strong> Vous pouvez vous opposer au traitement
+            de vos données
+          </li>
+          <li>
+            <strong>Droit à la portabilité :</strong> Vous pouvez récupérer vos données
+            dans un format structuré
+          </li>
+        </ul>
+
+        <h2>7. Contact et réclamation</h2>
+        <p>
+          Pour toute question concernant cette politique de confidentialité ou
+          l'utilisation de vos données, vous pouvez nous contacter à :
+        </p>
+        <p>
+          Email : <strong>itthings451@gmail.com</strong><br />
+        </p>
+
+        <p class="last-update">
+          <em>Dernière mise à jour : Décembre 2025</em>
+        </p>
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<style lang="scss">
+  .legal-page {
+    max-width: 1400px;
+    margin: auto;
+    background: white;
+  }
+
+  .lu-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-block: var(--sectionPadding);
+  }
+
+  .legal-content {
+    .intro {
+      font-size: 1.125rem;
+      line-height: 1.8em;
+      color: var(--bodyTextColor);
+      margin: 0 0 2.5rem 0;
+      padding: 1.5rem;
+      background: var(--color6);
+      border-radius: 0.5rem;
+      border-left: 4px solid var(--color-primary);
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin: 2.5rem 0 1rem 0;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--headerColor);
+      margin: 1.5rem 0 0.75rem 0;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.8em;
+      color: var(--bodyTextColor);
+      margin: 0 0 1.25rem 0;
+
+      strong {
+        font-weight: 700;
+        color: var(--headerColor);
+      }
+    }
+
+    ul {
+      margin: 1rem 0 1.5rem 0;
+      padding-left: 2rem;
+
+      li {
+        margin: 0.5rem 0;
+        line-height: 1.6;
+        color: var(--bodyTextColor);
+
+        strong {
+          font-weight: 700;
+          color: var(--headerColor);
+        }
+      }
+    }
+
+    a {
+      color: var(--color-primary);
+      text-decoration: underline;
+
+      &:hover {
+        color: var(--color4);
+      }
+    }
+
+    .last-update {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e0e0e0;
+      font-style: italic;
+      color: #666;
+    }
+  }
+</style>

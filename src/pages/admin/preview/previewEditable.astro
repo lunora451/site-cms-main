@@ -1,0 +1,48 @@
+---
+export const prerender = false;
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout>
+  <div class="mainContent">
+    <article class="article">
+      <h1 class="title" style="text-align: center;">Titre Catta</h1>
+
+      <!-- Mapped to content (markdown) -->
+      <div class="preview-content">
+        Le contenu de la collection Catta apparaîtra ici...
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<style is:global lang="scss">
+  .mainContent {
+    margin: auto;
+    width: 94%;
+    padding: 2rem 0;
+
+    .article {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #f9f9f9;
+      padding: 2rem;
+      border-radius: 8px;
+
+      h1 {
+        font-size: 2rem;
+        color: #333;
+      }
+
+      .preview-content {
+        margin-top: 1.5rem;
+      }
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .mainContent {
+      max-width: 1150px;
+    }
+  }
+</style>

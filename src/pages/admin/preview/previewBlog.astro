@@ -1,0 +1,76 @@
+---
+export const prerender = false;
+import Layout from "../../../layouts/Layout.astro";
+
+// This is a dedicated page used strictly by the CMS iframe to render a live preview.
+// It contains the exact HTML structure of a blog post, with classes hooked up to the CMS fields.
+---
+
+<Layout>
+  <div class="mainContent">
+    <article class="article">
+      <!-- Mapped to title -->
+      <h1 class="title">Titre de l'article</h1>
+
+      <!-- Mapped to descriptionFolder -->
+      <p class="description" style="color: gray; font-style: italic;">
+        Description de l'article
+      </p>
+
+      <!-- Mapped to pictureHeader -->
+      <img
+        class="pictureHeader headerImage"
+        src="https://placehold.co/800x400/eee/31343C?text=Image+de+couverture"
+        alt="Image de couverture"
+      />
+
+      <!-- Mapped to content (markdown) -->
+      <div class="preview-content">Le contenu Markdown apparaitra ici...</div>
+    </article>
+  </div>
+</Layout>
+
+<style is:global lang="scss">
+  .mainContent {
+    margin: auto;
+    width: 94%;
+    padding: 2rem 0;
+
+    .headerImage {
+      border-radius: 5px;
+      margin: 1rem 0;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+    .article {
+      max-width: 800px;
+      margin: 0 auto;
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .preview-content {
+        margin-top: 2rem;
+        line-height: 1.6;
+
+        h2 {
+          margin-top: 1.5rem;
+        }
+        p {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .mainContent {
+      max-width: 1150px;
+    }
+  }
+</style>

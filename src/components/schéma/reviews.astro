@@ -1,0 +1,37 @@
+---
+const baseUrl = Astro.site?.origin || "";
+
+const reviewSchema = {
+  review: [
+    {
+      "@type": "Review",
+      author: "Philippe Wojtowicz",
+      datePublished: "2025-04-29",
+      reviewBody: "",
+      name: "",
+      reviewRating: {
+        "@type": "Rating",
+        bestRating: "5",
+        ratingValue: "1",
+        worstRating: "1",
+      },
+    },
+    {
+      "@type": "Review",
+      author: "Lucas",
+      datePublished: "2011-03-25",
+      reviewBody:
+        "Great microwave for the price. It is small and fits in my apartment.",
+      name: "Value purchase",
+      reviewRating: {
+        "@type": "Rating",
+        bestRating: "5",
+        ratingValue: "4",
+        worstRating: "1",
+      },
+    },
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(reviewSchema)} />
