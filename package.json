@@ -11,12 +11,12 @@
     "deploy": "node scripts/setup-deploy.mjs"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.1.8",
+    "@astrojs/cloudflare": "^14.2.5",
     "@astrojs/sitemap": "^3.7.2",
-    "@astrojs/svelte": "^8.0.4",
-    "@zokki/astro-minify": "^1.1.0",
-    "astro": "^6.1.5",
+    "@astrojs/svelte": "^9.0.1",
     "@octokit/rest": "^21.0.0",
+    "@zokki/astro-minify": "^1.1.0",
+    "astro": "^7.2.7",
     "easymde": "^2.20.0",
     "resend": "^6.10.0",
     "sass": "^1.86.3",

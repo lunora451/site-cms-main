@@ -22,9 +22,6 @@ const pageSeo = seoConfig?.pages?.[pagePath] || {};
 const globalOg = seoConfig?.global?.og || {};
 const globalJsonLd = seoConfig?.global?.jsonLd || [];
 
-console.log("pageSEO", pageSeo);
-console.log("globalOg", globalOg);
-console.log("globalJsonLd", globalJsonLd);
 // Meta (page CMS overrides props)
 const seoTitle = pageSeo.metaTitle || title;
 const seoDescription = pageSeo.metaDescription || description;
